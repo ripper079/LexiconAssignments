@@ -397,7 +397,37 @@ namespace LearningExercises
             }
         }
 
-        public void Exercise14() { }
+        public void Exercise14() 
+        {
+            Console.WriteLine("Exercise 14");
+            int countNumberEntered = 0;
+            int sumAllNumbers = 0;
+
+            string userInputInString;
+            int userInputNumber;
+
+            bool keepRunning = true;
+
+            while (keepRunning) 
+            {
+                Console.Write("Enter a number: ");
+                userInputInString = Console.ReadLine();
+                int.TryParse(userInputInString, out userInputNumber);
+
+                if (userInputNumber == -1)
+                {
+                    Console.WriteLine($"Sum: {sumAllNumbers}");
+                    Console.WriteLine($"Average: {(double)sumAllNumbers / (double)countNumberEntered}");
+                    keepRunning = false;
+                }
+                else
+                {
+                    sumAllNumbers += userInputNumber;
+                    ++countNumberEntered;
+                }
+
+            }
+        }
 
         public void Exercise15() { }
 
