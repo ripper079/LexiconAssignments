@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+
+using static ClassLibraryUtils.UtilsInput;
+
 
 namespace LearningExercises
 {
@@ -104,8 +107,8 @@ namespace LearningExercises
         public void Exercise06() 
         {
             Console.WriteLine("Exercise 6");
-            int numberOne = AllExercises.forceIntegerInput("Enter an int number [first]");
-            int numberTwo = AllExercises.forceIntegerInput("Enter a number [second]");
+            int numberOne = forceIntegerInput("Enter an int number [first]");
+            int numberTwo = forceIntegerInput("Enter a number [second]");
             Console.WriteLine();
 
             int smallestNumber =  ((numberOne < numberTwo) ? numberOne : numberTwo);
@@ -145,7 +148,7 @@ namespace LearningExercises
         {
             Console.WriteLine("Exercise 7");
 
-            double radius = AllExercises.forceDoubleInput("Input radius of a circle [as an double]");
+            double radius = forceDoubleInput("Input radius of a circle [as an double]");
             
             double areaCircle = (2*Math.PI * Math.Pow(radius, 2));
             double volumeCircle = (4 * Math.PI * Math.Pow(radius, 3)) / 3;
@@ -163,7 +166,7 @@ namespace LearningExercises
             Console.WriteLine("Exercise 8");
             //decimal number = AllExercises.forceDecimalInput("Input a decimal number");
 
-            double number = AllExercises.forceDoubleInput("Input a decimal number");
+            double number = forceDoubleInput("Input a decimal number");
             Console.WriteLine();
 
             Console.WriteLine($"The {number} squareRooted {(Math.Sqrt(number))}");
@@ -278,11 +281,55 @@ namespace LearningExercises
                 Console.WriteLine("Invalid input option for coke selection");
             }
         }
+
+        private bool toogleColor = false;
         public void Exercise10() 
         {
+            Console.WriteLine("Exercise 10");            
+            Console.WriteLine("1. [Division Calc]");
+            Console.WriteLine("2. [Invoke exercise 4]");
+            Console.WriteLine("3. [Toogle color]");
+            int optionChoice = forceIntegerInput("Choose an option");
+            switch (optionChoice) 
+            {
+                case 1 :
+                    ExecuteSub10_1();
+                break;
+                case 2 :
+                    Exercise04();
+                break;
+                case 3 :
+                    toogleColor = !toogleColor;
+                    if (toogleColor)
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    else
+                        Console.ForegroundColor = ConsoleColor.Yellow;
 
-        
+                    Console.WriteLine("This text color should change each re-run");
+                    break;
+            }            
+            
+
+            
         }
+
+        private void ExecuteSub10_1() 
+        {
+            int a = forceIntegerInput("Enter the first number");
+            int b = forceIntegerInput("Enter the second number");
+
+            if (b == 0)
+            {
+                Console.WriteLine("Division by zero not allowed");
+            }
+            else 
+            {
+                double resultDivision = (double)a / (double)b;
+                resultDivision = Math.Round(resultDivision, 3);
+                Console.WriteLine($"The division of {a}/{b} is {resultDivision}");
+            }
+        }
+
         public void Exercise11() { }
         public void Exercise12() { }
 

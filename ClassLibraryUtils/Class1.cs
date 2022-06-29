@@ -12,7 +12,7 @@
             return 999;
         }
 
-        static int forceIntegerInput(string title)
+        public static int forceIntegerInput(string title)
         {
             Console.WriteLine(title);
             var numbAsString = Console.ReadLine();
@@ -27,7 +27,7 @@
             return validatedNumber;
         }
 
-        static double forceDoubleInput(string title)
+        public static double forceDoubleInput(string title)
         {
             Console.WriteLine(title);
             var numbAsString = Console.ReadLine();
