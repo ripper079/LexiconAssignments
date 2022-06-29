@@ -330,7 +330,31 @@ namespace LearningExercises
             }
         }
 
-        public void Exercise11() { }
+        public void Exercise11() 
+        {
+            int number = forceIntegerInput("Enter an interger[greater than 0]");
+            Console.WriteLine();
+            if (number <= 0) 
+            {
+                Console.WriteLine($"Told you to put a number greater than 0. You inputed {number}");
+            }
+            else
+            {
+                for (int i = 0; i <= number; i++) 
+                {
+                    Console.ForegroundColor = ((i % 2) == 0) ?  ConsoleColor.Red : ConsoleColor.Green;
+                    Console.WriteLine(i);
+                }
+                Console.WriteLine("-----------------------------------------------");
+
+                for (int i = number; i >= 0; i--)
+                {
+                    Console.ForegroundColor = ((i % 2) == 0) ? ConsoleColor.Red : ConsoleColor.Green;
+                    Console.WriteLine(i);
+                }
+            }
+        }
+
         public void Exercise12() { }
 
 
