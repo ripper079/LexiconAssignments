@@ -355,7 +355,18 @@ namespace LearningExercises
             }
         }
 
-        public void Exercise12() { }
+        public void Exercise12() 
+        {
+            for (int i = 1; i <= 10; i++)
+                PrintMultiplicationTable(i);
+        }
+
+        private void PrintMultiplicationTable(int baseNumber) 
+        {
+            for (int i = 1; i <=10; i++)
+                Console.Write($"{baseNumber*i}\t");
+            Console.WriteLine();
+        }
 
 
 
