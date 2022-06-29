@@ -286,6 +286,10 @@ namespace LearningExercises
         public void Exercise11() { }
         public void Exercise12() { }
 
+
+
+
+        /*
         //Util method to insure int input
         static int forceIntegerInput(string title)
         {
@@ -317,22 +321,7 @@ namespace LearningExercises
 
             return validatedNumber;
         }
-        
-        static decimal forceDecimalInput(string title)
-        {
-            Console.WriteLine(title);
-            var numbAsString = Console.ReadLine();
-            decimal validatedNumber;
-
-            while (!decimal.TryParse(numbAsString, out validatedNumber))
-            {
-                Console.WriteLine("That not a number. " + title);
-                numbAsString = Console.ReadLine();
-            }
-
-            return validatedNumber;
-        }
-        
+        */            
 
     }
 
