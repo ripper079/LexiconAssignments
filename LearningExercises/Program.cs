@@ -52,7 +52,7 @@ while (keepAlive)
                 mySolutions.Exercise12();
                 break;
             case 13:
-
+                mySolutions.Exercise13();
                 break;
             case 14:
 

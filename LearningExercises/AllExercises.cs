@@ -358,52 +358,52 @@ namespace LearningExercises
         public void Exercise12() 
         {
             for (int i = 1; i <= 10; i++)
-                PrintMultiplicationTable(i);
+                PrintMultiplicationRow(i);
         }
 
-        private void PrintMultiplicationTable(int baseNumber) 
+        private void PrintMultiplicationRow(int rowNumber) 
         {
             for (int i = 1; i <=10; i++)
-                Console.Write($"{baseNumber*i}\t");
+                Console.Write($"{rowNumber * i}\t");
             Console.WriteLine();
         }
 
-
-
-
-        /*
-        //Util method to insure int input
-        static int forceIntegerInput(string title)
+        public void Exercise13() 
         {
-            Console.WriteLine(title);
-            var numbAsString = Console.ReadLine();
-            int validatedNumber;
+            Random random = new Random();
+            int secretNumber = random.Next(1, 500);
 
-            while (!int.TryParse(numbAsString, out validatedNumber))
+            bool wrongGuess = true;
+            int countGuesses = 0;
+            string guessedNumberInString;
+            int guessedNumber;
+            Console.WriteLine("Guess the right number, 1-500");
+            while (wrongGuess) 
             {
-                Console.WriteLine("That not a number. " + title);
-                numbAsString = Console.ReadLine();
+                Console.WriteLine("Take a guess");
+                guessedNumberInString = Console.ReadLine();
+                int.TryParse(guessedNumberInString, out guessedNumber);
+                ++countGuesses;
+                if (secretNumber > guessedNumber)
+                    Console.WriteLine("You're guess is to LOW");
+                else if (secretNumber < guessedNumber)
+                    Console.WriteLine("You're guess is to HIGH");
+                else 
+                {
+                    Console.WriteLine("Correct guessed");
+                    Console.WriteLine($"You need {countGuesses} guesses");
+                    wrongGuess = false;
+                }
             }
-
-            return validatedNumber;
         }
 
-        //Util method to insure double input
-        static double forceDoubleInput(string title)
-        {
-            Console.WriteLine(title);
-            var numbAsString = Console.ReadLine();
-            double validatedNumber;
+        public void Exercise14() { }
 
-            while (!double.TryParse(numbAsString, out validatedNumber))
-            {
-                Console.WriteLine("That not a number. " + title);
-                numbAsString = Console.ReadLine();
-            }            
+        public void Exercise15() { }
 
-            return validatedNumber;
-        }
-        */            
+        public void Exercise16() { }
+
+
 
     }
 
