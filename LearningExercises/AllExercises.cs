@@ -674,5 +674,54 @@ namespace LearningExercises
 
         }
 
+        public void Exercise21() 
+        {
+            Console.WriteLine("Exercise 21");
+            Console.WriteLine("Enter numbers - separated with comma");
+            string numbersWithComma = Console.ReadLine();
+
+            String[] splittedWords = numbersWithComma.Split(",");
+            int[] numberArrays = new int[splittedWords.Length];                                        
+
+            for (int i = 0; i < splittedWords.Length; i++) 
+            {
+                int.TryParse(splittedWords[i], out numberArrays[i]);
+            }
+
+            int sum = 0;
+            //Any will do but we know that at least one element should exist
+            int min = numberArrays[0];
+            int max = numberArrays[0];
+
+            foreach (int number in numberArrays) 
+            {
+                sum += number;
+                if (min > number)
+                {
+                    min = number; 
+                }
+                if (max < number)
+                {
+                    max = number; 
+                }
+
+            }
+
+            double average = (double)sum / (double)splittedWords.Length;
+
+            Console.WriteLine();
+            Console.WriteLine("Inputed number(s) in array");
+            foreach (int number in numberArrays) 
+            {
+                Console.WriteLine($"Number {number}");
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Min value: {min}" );
+            Console.WriteLine($"Max value: {max}");
+            Console.WriteLine($"Average value: {average}");
+
+        }
+
+
     }
 }
