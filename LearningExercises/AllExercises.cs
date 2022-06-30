@@ -631,6 +631,48 @@ namespace LearningExercises
             }
         }
 
+        public void Exercise20() 
+        {
+            Console.WriteLine("Exercise 20");
+            const int arraySize = 20;
+
+            int[] arrayOne = new int[arraySize];
+            int[] arrayTwo = new int[arraySize];
+
+            int leftIndex = 0;
+            int rightIndex = arraySize - 1;
+
+            Random random = new Random();
+
+            for (int i = 0; i < arraySize; i++) 
+            {
+                arrayOne[i] = random.Next(1,100); 
+            }
+
+            
+            foreach (int number in arrayOne)
+            {
+                //means even, put them to the right side of the array
+                if ((number % 2) == 0)
+                {
+                    arrayTwo[rightIndex] = number;
+                    rightIndex--;
+                }
+                else 
+                {
+                    arrayTwo[leftIndex] = number;
+                    leftIndex++;
+                }
+            }
+            
+            Console.WriteLine("Odd number to the left and even to the right");
+            foreach (int number in arrayTwo) 
+            {
+                Console.Write($" {number} ");
+            }
+            Console.WriteLine();
+
+        }
 
     }
 }
