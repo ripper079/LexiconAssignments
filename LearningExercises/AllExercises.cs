@@ -570,6 +570,67 @@ namespace LearningExercises
             }
         }
 
+        public void Exercise19() 
+        {
+            Console.WriteLine("Exercise 19");
+            Console.Write("Money to pay: ");
+            String strMoneyToPay = Console.ReadLine();
+            Console.Write("Enter the sum to pay: ");
+            String strSumToPay = Console.ReadLine();
+            
+            int priceToPay;
+            int userPays;
+            
+
+            int.TryParse(strMoneyToPay, out priceToPay);
+            int.TryParse(strSumToPay, out userPays);
+
+            int changeBack = userPays - priceToPay;
+            if (changeBack < 0)
+            {
+                Console.WriteLine("You payed to little");
+            }
+            else 
+            {            
+                Console.WriteLine($"Calculated change: {changeBack}");
+
+                int coinsIn1000 = changeBack / 1000;
+                changeBack -= coinsIn1000 * 1000;
+            
+                int coinsIn500 = changeBack / 500;
+                changeBack -= coinsIn500 * 500;
+
+                int coinsIn100 = changeBack / 100;
+                changeBack -= coinsIn100 * 100;
+
+                int coinsIn50 = changeBack / 50;
+                changeBack -= coinsIn50 * 50;
+
+                int coinsIn20 = changeBack / 20;
+                changeBack -= coinsIn20 * 20;
+
+                int coinsIn10 = changeBack / 10;
+                changeBack -= coinsIn10 * 10;
+
+                int coinsIn5 = changeBack / 5;
+                changeBack -= coinsIn5 * 5;
+
+                int coinsIn1 = changeBack / 1;
+                changeBack -= coinsIn1 * 1;
+
+                Console.WriteLine();
+                Console.WriteLine("Coins distribution");
+                Console.WriteLine($"1000 coins : {coinsIn1000}");
+                Console.WriteLine($"500 coins : {coinsIn500}");
+                Console.WriteLine($"100 coins : {coinsIn100}");
+                Console.WriteLine($"50 coins : {coinsIn50}");
+                Console.WriteLine($"20 coins : {coinsIn20}");
+                Console.WriteLine($"10 coins : {coinsIn10}");
+                Console.WriteLine($"5 coins : {coinsIn5}");
+                Console.WriteLine($"1 coins : {coinsIn1}");
+            }
+        }
+
 
     }
 }

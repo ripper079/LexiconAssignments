@@ -69,6 +69,16 @@ while (keepAlive)
             case 18:
                 mySolutions.Exercise18();
                 break;
+            case 19:
+                mySolutions.Exercise19();
+                break;
+            case 20:
+
+                break;
+            case 21:
+                
+                break;
+
             case 99:
                 
                 break;
