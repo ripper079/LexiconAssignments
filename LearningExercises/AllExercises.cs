@@ -429,9 +429,79 @@ namespace LearningExercises
             }
         }
 
-        public void Exercise15() { }
+        public void Exercise15() 
+        {
+            Console.WriteLine("Exercise 15");
+            ExecuteSub15_1();
+            Console.WriteLine();
+            ExecuteSub15_2();
 
-        public void Exercise16() { }
+        }
+        private void ExecuteSub15_1() 
+        {
+            int userInput = forceIntegerInput("Enter a valid integer number");
+            Console.WriteLine("Displaying divisible numbers");
+
+            //Skip 1 
+            Console.Write("[");
+            for (int i = 2; i <= userInput; i++)
+            {
+                if (userInput % i == 0)
+                    Console.Write($" {userInput / i} ");
+            }
+            Console.Write("]");
+            Console.WriteLine();
+        }
+
+        private void ExecuteSub15_2() 
+        {
+            Console.WriteLine("Finding perfect numbers...");
+            int countMatch = 0;
+            const int countMaxNumbersToFind = 3;
+
+            for (int i = 1; i < int.MaxValue; i++) 
+            {
+                if (IsPerfectNumber(i))
+                {
+                    Console.WriteLine($"Match! {i} is a perfect number");
+                    countMatch++;
+                }
+
+                if (countMaxNumbersToFind == countMatch)
+                    break;
+            }
+            
+        }
+
+        private bool IsPerfectNumber(int prospect) 
+        {
+            // To store sum of divisors
+            int sum = 1;
+
+            // Find all divisors and add them
+            for (int i = 2; i * i <= prospect; i++)
+            {
+                if (prospect % i == 0)
+                {
+                    if (i * i != prospect)
+                        sum = sum + i + prospect / i;
+                    else
+                        sum = sum + i;
+                }
+            }
+            // If sum of divisors is equal to
+            // n, then n is a perfect number
+            if (sum == prospect && prospect != 1)
+                return true;
+
+            return false;
+        }
+
+
+        public void Exercise16() 
+        { 
+
+        }
 
 
 
