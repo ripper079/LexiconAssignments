@@ -543,7 +543,33 @@ namespace LearningExercises
 
         }
 
+        public void Exercise18() 
+        {
+            Console.WriteLine("Exercise 18");
+            const int sizeOfArray = 10;
+            int[] arrayOfInt = new int[sizeOfArray];
+            double[] arrayOfDouble = new double[sizeOfArray];
+            Random random = new Random();
+
+            for (int i = 0; i < sizeOfArray; i++)
+            {
+                arrayOfInt[i] = random.Next(1,100);
+                arrayOfDouble[i] = 1.0D / (double)arrayOfInt[i];
+            }
+
+            Console.WriteLine("Int values");
+            foreach (int i in arrayOfInt) 
+            {
+                Console.WriteLine($"{i}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("Double values");
+            foreach (double i in arrayOfDouble)
+            {
+                Console.WriteLine($"{i}");
+            }
+        }
+
+
     }
-
-
 }
