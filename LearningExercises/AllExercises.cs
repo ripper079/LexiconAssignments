@@ -497,13 +497,51 @@ namespace LearningExercises
             return false;
         }
 
+        public void Exercise16()
+        {
+            Console.WriteLine("Exercise 16");
+            int number = forceIntegerInput("Enter a number [geater than 0] for Fibonacci series");
 
-        public void Exercise16() 
-        { 
+            int val1 = 0, val2 = 1, val3;
 
+            Console.WriteLine("Fibonacci series:");
+            //Prints first 3 numbers
+            Console.Write(val1 + " " + val2 + " ");
+            for (int i = 2; i < number; ++i)
+            {
+                val3 = val1 + val2;
+                Console.Write(val3 + " ");
+                val1 = val2;
+                val2 = val3;
+
+            }
+            Console.WriteLine();
         }
 
+        public void Exercise17() 
+        {
+            Console.WriteLine("Exercise 17");
+            Console.WriteLine("Palimdrone test");
+            Console.Write("Enter a word to check: ");
+            string userInputString = Console.ReadLine();
+                       
+            Console.WriteLine();
+            //Remove all blank spaces
+            string removeBlanks = userInputString.Replace(" ", string.Empty);            
 
+            char[] charArrayCopy = removeBlanks.ToCharArray();
+            //reverse it
+            Array.Reverse(charArrayCopy);
+
+            //Copy to a new string
+            string reverseString = new string(charArrayCopy);
+
+            if (String.Equals(removeBlanks, reverseString))
+                Console.WriteLine($"\"{userInputString}\" is  a palindrome");
+            else
+                Console.WriteLine($"\"{userInputString}\" is NOT  a palindrome");
+
+        }
 
     }
 

@@ -61,10 +61,10 @@ while (keepAlive)
                 mySolutions.Exercise15();
                 break;
             case 16:
-                
+                mySolutions.Exercise16();
                 break;
             case 17:
-                
+                mySolutions.Exercise17();
                 break;
             case 18:
                 
