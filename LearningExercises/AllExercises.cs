@@ -594,11 +594,11 @@ namespace LearningExercises
             {            
                 Console.WriteLine($"Calculated change: {changeBack}");
 
-                int coinsIn1000 = changeBack / 1000;
-                changeBack -= coinsIn1000 * 1000;
+                int coinsIn1000 = changeBack / 1000;        // Antal st 1000 lappar
+                changeBack -= coinsIn1000 * 1000;           // Resterande växel
             
-                int coinsIn500 = changeBack / 500;
-                changeBack -= coinsIn500 * 500;
+                int coinsIn500 = changeBack / 500;          // Antal st 500 lappar
+                changeBack -= coinsIn500 * 500;             // Resterande växel
 
                 int coinsIn100 = changeBack / 100;
                 changeBack -= coinsIn100 * 100;
@@ -634,7 +634,7 @@ namespace LearningExercises
         public void Exercise20() 
         {
             Console.WriteLine("Exercise 20");
-            const int arraySize = 20;
+            const int arraySize = 21;
 
             int[] arrayOne = new int[arraySize];
             int[] arrayTwo = new int[arraySize];
@@ -722,6 +722,200 @@ namespace LearningExercises
 
         }
 
+        public void Exercise22() 
+        {            
+            Console.WriteLine("Exercise 22");
+            Console.WriteLine();
+            int countSwearWords = 0;
 
+            string[] swearWords = new string[] { "stupid", "ugly", "donkeyass", "idiot", "ass", "R", "as", "Å" };
+            //Console.WriteLine("Say something mean");
+            //string prospectBadWord = Console.ReadLine();
+
+            //string prospectBadWord = "you are a ugly ugly.. an idiot    or .donkeyass";
+            string prospectBadWord = "you are stupid and ugly apple. an .idiot. and donkeyass. learn c# and Å get smart idiot ass as";
+
+            //Splitted words but still having .,;:
+            char[] charToChopOff = { '.', ',', ';', ':' };
+            string[] userAllWordsSplitted = prospectBadWord.Split(" ");
+
+            /*
+            string rebuildString = string.Join(" ", userAllWordsSplitted);
+            Console.WriteLine("Rebuilded string");
+            Console.WriteLine(rebuildString);
+            */
+            printStringArray(userAllWordsSplitted, "Splitted Array");
+            
+            string[] userSplittedWordFiltedAwayDots = GetWordsWithoutMatchPattern(userAllWordsSplitted);
+            printStringArray(userSplittedWordFiltedAwayDots, " Filtered array[dots]");
+            
+            //Censur words [without dots]
+            string[] userSplittedWordFiltedAwayDotsReplacedWord = new string[userSplittedWordFiltedAwayDots.Length];
+
+            for (int i = 0; i < userSplittedWordFiltedAwayDots.Length; i++) 
+            {
+                //Match for swearwords
+                if (IsSwearWord(userSplittedWordFiltedAwayDots[i], swearWords)) 
+                {
+                    countSwearWords++;
+                    userSplittedWordFiltedAwayDotsReplacedWord[i] = GetNewCencuredWord(userSplittedWordFiltedAwayDots[i]);
+                }
+                else 
+                {
+                    userSplittedWordFiltedAwayDotsReplacedWord[i] = userSplittedWordFiltedAwayDots[i];
+                }
+            }
+
+            printStringArray(userSplittedWordFiltedAwayDotsReplacedWord, "Cencured words");
+
+
+            string[] correctCencoredString = buildCencuredStringsWithStars(userAllWordsSplitted, userSplittedWordFiltedAwayDotsReplacedWord);
+
+            printStringArray(correctCencoredString, "Rebuilded string with dots");
+
+            /*
+            Console.WriteLine("Original input from user");
+            Console.WriteLine(prospectBadWord);
+            Console.WriteLine();
+            Console.WriteLine($"Cencured output {countSwearWords} time(s)");
+            Console.WriteLine(rebuildCencuredStringString);
+            */
+
+
+            //string[] correctCencoredString = buildCencuredString(userAllWordsSplitted, userSplittedWordFiltedAwayDotsReplacedWord);
+            //Console.WriteLine("FDSFDSFDSFDSFDS");
+            //printStringArray(correctCencoredString, "Cencor string string string");
+
+            //Rubild string last
+            //string rebuildCencuredStringString = string.Join(" ", userSplittedWordFiltedAwayDotsReplacedWord);
+
+        }
+
+        //Builds cencured string - including filtered characters
+        private string[] buildCencuredStringsWithStars(string[] userOriginalInputSplitted, string[] userCencuredStringWithoutDots) 
+        {
+            
+            /*
+            if (".ugly".StartsWith("."))
+                Console.WriteLine("It starts with .");
+            */
+
+            string[] newCencuredString = new string[userOriginalInputSplitted.Length];
+
+
+
+            for (int i = 0; i < userCencuredStringWithoutDots.Length; i++) 
+            {
+                newCencuredString[i] = userCencuredStringWithoutDots[i];
+
+                //Contains a filter character - Make sure to add it
+                if (userCencuredStringWithoutDots[i].Contains("*"))
+                {
+                    
+                    
+                }
+            }
+
+            return newCencuredString;
+        }
+        
+
+        
+
+        private void printStringArray(string[] arrayToPrint, string title) 
+        {
+            Console.WriteLine(title);
+
+            foreach (string item in arrayToPrint) 
+            {
+                Console.WriteLine(item);            
+            }
+            Console.WriteLine();
+        }
+
+        private bool IsSwearWord(string prospectSwearWord, string[] swearWords) 
+        {
+            for (int i = 0; i < swearWords.Length; i++) 
+            {
+                if (String.Equals(prospectSwearWord, swearWords[i])) 
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private string GetNewCencuredWord(string badWord) 
+        {
+            char[] wordToBeCensured = badWord.ToCharArray();
+
+            
+            
+            if (badWord.Length == 1)
+            {
+                return new string("*");
+            }
+            else if (badWord.Length == 2)
+            {
+                return new string("**");
+            }
+            else if (badWord.Length == 3)
+            {
+                return new string("***");
+            }
+            else if (badWord.Length == 4)
+            {
+                return new string("****");
+            }
+            //Five or more
+            //if (badWord.Length >= 5)
+            else
+            {
+                int indexInTheMiddle = (badWord.Length / 2);
+                //Cencur word in the middle plus one in each side
+                wordToBeCensured[indexInTheMiddle] = '*';
+                wordToBeCensured[indexInTheMiddle - 1] = '*';
+                wordToBeCensured[indexInTheMiddle + 1] = '*';
+                return new string(wordToBeCensured);
+            }
+        }
+
+
+        private string[] GetWordsWithoutMatchPattern(string[] listOfStringsWithUnwantedChars) 
+        {
+            //Trim off characters that match
+            char[] charToChopOff = { '.', ',', ';', ':' };
+
+            //At most
+            string[] tempWordWithoutPattern = new string[listOfStringsWithUnwantedChars.Length];
+
+            for (int i = 0; i < listOfStringsWithUnwantedChars.Length; i++) 
+            {                
+                string prospectOfBadWordWithDotComma = listOfStringsWithUnwantedChars[i];
+                //This word trims of accourding to pattern defined in start of this method
+                string formattedString = prospectOfBadWordWithDotComma.Trim(charToChopOff);
+                tempWordWithoutPattern[i] = formattedString;
+            }
+
+            return tempWordWithoutPattern;
+
+
+
+
+
+
+
+
+
+
+
+            //Characters to trim off
+            //char[] charsToTrim = { '.', ',', ';' };
+            //string text = "fult ord med trailing punkt. dum. ugly,";
+            //Trims last word only
+            //string formatedString = text.Trim(charsToTrim);
+            //Console.WriteLine(formatedString);
+        }
     }
 }
