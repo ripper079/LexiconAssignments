@@ -1,9 +1,8 @@
 ﻿using System;
 
-
 namespace Assignment_01
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -14,30 +13,37 @@ namespace Assignment_01
                         
             do
             {
-                Program.displayMenuChoices();
+                Program.DisplayMenuChoices();
 
                 //Force
-                validatedChoice = forceIntegerInput("Enter a menu option");
+                validatedChoice = ForceIntegerInput("Enter a menu option");
 
                 //Perform user desired operation
                 switch (validatedChoice)
                 {
-                    case 1:                        
-                        performAddition();
+                    case 1:
+                        DisplayAddition();
                         break;
-                    case 2:                       
-                        performSubtraction();
+                    case 2:
+                        DisplaySubtraction();
                         break;
-                    case 3:                       
-                        performDivision();
+                    case 3:
+                        DisplayDivision();
                         break;
-                    case 4:                       
-                        performMultiplication();
+                    case 4:
+                        DisplayMultiplication();
                         break;
                     case 5:
+                        DisplayAdditionWithArray();
+                        break;
+                    case 6:
+                        DisplaySubtractionWithArray();
+                        break;
+                    case 7:
                         Console.WriteLine("Quit program");
                         keepRunning = false;
                         break;
+                        // Add option for user to enter multiple inputs, sum and subtract
                     default:
                         Console.WriteLine("Invalid menu option!!!!");
                         Console.WriteLine("[Press any key for returning to meny]");
@@ -46,11 +52,10 @@ namespace Assignment_01
                 }
             }
 
-            while (keepRunning);                        
-           
+            while (keepRunning);                                   
         }
 
-        static void displayMenuChoices() 
+        static void DisplayMenuChoices() 
         {
             //Display meny
             Console.Clear();                        
@@ -60,14 +65,16 @@ namespace Assignment_01
             Console.WriteLine("2. Subtraction");
             Console.WriteLine("3. Division");
             Console.WriteLine("4. Multiplication");
-            Console.WriteLine("5. Quit");
+            Console.WriteLine("5. Addition with an array");
+            Console.WriteLine("6. Subtraction with an array");
+            Console.WriteLine("7. Quit");
         }   
 
         //User input
         // |
         // |
         // v   
-        static int forceIntegerInput(string title) 
+        static int ForceIntegerInput(string title) 
         {
             Console.WriteLine(title);
             var numbAsString = Console.ReadLine();
@@ -86,74 +93,158 @@ namespace Assignment_01
         // |
         // |
         // v  
-
-        static void performAddition() 
+       
+        static void DisplayAddition() 
         {
-            int userInputNumber1 = 0;
-            int userInputNumber2 = 0;
-
-            int calculationResult = 0;
-
-            Console.WriteLine("Addition Calculation");
-            //Force user to enter 2 correct math operand(s)
-            userInputNumber1 = forceIntegerInput("Enter first operand");
-            userInputNumber2 = forceIntegerInput("Enter second operand");            
-            calculationResult = userInputNumber1 + userInputNumber2;
+            Console.WriteLine("Addition Calculation");                     
             
-            Console.WriteLine(userInputNumber1 + "+" + userInputNumber2 + "= " + calculationResult);
+            //Force user to enter 2 correct math operand(s)
+            int userInputNumber1 = ForceIntegerInput("Enter first operand");
+            int userInputNumber2 = ForceIntegerInput("Enter second operand");
+
+            int additionResult = Addition(userInputNumber1, userInputNumber2);
+            Console.WriteLine(userInputNumber1 + "+" + userInputNumber2 + "= " + additionResult);
             Console.WriteLine("[Press any key for returning to meny]");
             Console.ReadKey();
         }
 
-        static void performSubtraction() 
+        static void DisplayAdditionWithArray() 
         {
-            int userInputNumber1 = 0;
-            int userInputNumber2 = 0;
+            Console.WriteLine("Addition array Calculation");
 
-            int calculationResult = 0;
+            Console.WriteLine("Enter an array of integers - seperate with ONE blank space");
 
+            string[] splittedString = Console.ReadLine().Trim().Split(' ');
+
+            if (ArrayContainsOnlyInts(splittedString))
+            {
+                int[] arrayOfInts = new int[splittedString.Length];
+
+                for (int i = 0; i < arrayOfInts.Length; i++)
+                {
+                    arrayOfInts[i] = int.Parse(splittedString[i]);
+                }
+
+                int additionResult = Addition(arrayOfInts);
+               
+                Console.WriteLine($"The sum of all inputed int: {additionResult}");
+            }
+            else 
+            {
+                Console.WriteLine("Invalid data inputed!");
+            }                                        
+            
+            Console.WriteLine("Press enter to continue");
+            Console.ReadLine();
+            
+        }
+
+        
+        public static int Addition(int numberOne, int numberTwo) 
+        {            
+            return (numberOne + numberTwo);
+        }
+
+        public static int Addition(int[] arrayOfInts) 
+        {
+            int sumAddition = 0;
+            foreach (int item in arrayOfInts) 
+            {
+                sumAddition += item;
+            }
+
+            return sumAddition;            
+        }
+
+        static void DisplaySubtraction() 
+        {            
             Console.WriteLine("Subtraction Calculation");
             //Force user to enter 2 correct math operand(s)
-            userInputNumber1 = forceIntegerInput("Enter first operand");
-            userInputNumber2 = forceIntegerInput("Enter second operand");            
-            calculationResult = userInputNumber1 -  userInputNumber2;
-            
-            Console.WriteLine(userInputNumber1 + "-" + userInputNumber2 + "= " + calculationResult);
+            int userInputNumber1 = ForceIntegerInput("Enter first operand");
+            int userInputNumber2 = ForceIntegerInput("Enter second operand");
+            int subtractionResult = Subtraction(userInputNumber1,userInputNumber2);
+
+            Console.WriteLine(userInputNumber1 + "-" + userInputNumber2 + "= " + subtractionResult);
             Console.WriteLine("[Press any key for returning to meny]");
             Console.ReadKey();
         }
 
-        static void performMultiplication() 
+        static void DisplaySubtractionWithArray()
         {
-            int userInputNumber1 = 0;
-            int userInputNumber2 = 0;
+            Console.WriteLine("Subtraction array Calculation");
 
-            int calculationResult = 0;
+            Console.WriteLine("Enter an array of integers - seperate with ONE blank space");
 
+            string[] splittedString = Console.ReadLine().Trim().Split(' ');
+
+            if (ArrayContainsOnlyInts(splittedString))
+            {
+                int[] arrayOfInts = new int[splittedString.Length];
+
+                for (int i = 0; i < arrayOfInts.Length; i++)
+                {
+                    arrayOfInts[i] = int.Parse(splittedString[i]);
+                }
+
+                int subtractionResult = Subtraction(arrayOfInts);
+
+                Console.WriteLine($"The sum of all inputed int: {subtractionResult}");
+            }
+            else
+            {
+                Console.WriteLine("Invalid data inputed!");
+            }
+
+            Console.WriteLine("Press enter to continue");
+            Console.ReadLine();
+
+        }
+
+        public static int Subtraction(int numberOne, int numberTwo) 
+        {
+            return (numberOne - numberTwo);
+        }
+
+        public static int Subtraction(int[] arrayOfInts) 
+        {
+            int sumSubtraction = 0;
+            foreach (int item in arrayOfInts)
+            {
+                sumSubtraction += item;
+            }
+
+            return -sumSubtraction;
+        }
+
+        static void DisplayMultiplication() 
+        {
             Console.WriteLine("Multiplication Calculation");
             //Force user to enter 2 correct math operand(s)
-            userInputNumber1 = forceIntegerInput("Enter first operand");
-            userInputNumber2 = forceIntegerInput("Enter second operand");
-            calculationResult = (userInputNumber1 * userInputNumber2);
+            int userInputNumber1 = ForceIntegerInput("Enter first operand");
+            int userInputNumber2 = ForceIntegerInput("Enter second operand");
+            int multiplicationResult = Multiplication(userInputNumber1, userInputNumber2);
 
-            Console.WriteLine(userInputNumber1 + "*" + userInputNumber2 + "= " + calculationResult);
+            Console.WriteLine(userInputNumber1 + "*" + userInputNumber2 + "= " + multiplicationResult);
             Console.WriteLine("[Press any key for returning to meny]");
             Console.ReadKey();
         }
 
-        static void performDivision() 
+        public static int Multiplication(int numberOne, int numberTwo) 
         {
-            int userInputNumber1 = 0;
-            int userInputNumber2 = 0;
+            return (numberOne * numberTwo);
+        }
+       
 
-            bool flagDivisionByZero = false;            
-
+        static void DisplayDivision() 
+        {            
             Console.WriteLine("Division Calculation");
-            
+
             //Force user to enter 2 correct math operand(s)
-            userInputNumber1 = forceIntegerInput("Enter first operand");            
-            //Make Error check - Don't allow divsion by zero
-            userInputNumber2 = forceIntegerInput("Enter second operand");
+            int userInputNumber1 = ForceIntegerInput("Enter first operand");
+            //Make Error check - Don't allow division by zero by enfocing user to enter anything but 0
+            int userInputNumber2 = ForceIntegerInput("Enter second operand");
+                        
+            bool flagDivisionByZero = false;
             if (userInputNumber2 == 0)
                 flagDivisionByZero = true;
 
@@ -161,21 +252,52 @@ namespace Assignment_01
             while (flagDivisionByZero)
             {
                 Console.WriteLine("You can't divide by ZERO");
-                userInputNumber2 = forceIntegerInput("Enter second operand");
+                userInputNumber2 = ForceIntegerInput("Enter second operand");
                 if (userInputNumber2 == 0)
                     flagDivisionByZero = true;
                 else
                     flagDivisionByZero = false;
-            }
-
-            //Conversion is needed
-            double resultInDouble = Convert.ToDouble(userInputNumber1) / Convert.ToDouble(userInputNumber2);
+            }            
+            
+            double divisionResult = Division(userInputNumber1, userInputNumber2);
             //Round to 2 digits
-            resultInDouble = Math.Round(resultInDouble, 2);
+            divisionResult = Math.Round(divisionResult, 2);
 
-            Console.WriteLine(userInputNumber1 + "/" + userInputNumber2 + "= " + resultInDouble);
+            Console.WriteLine(userInputNumber1 + "/" + userInputNumber2 + "= " + divisionResult);
             Console.WriteLine("[Press any key for returning to meny]");
             Console.ReadKey();
+        }
+
+        public static double Division(int numberOne, int numberTwo)
+        {            
+            double divisionResult = 0;
+
+            try
+            {
+                divisionResult = (Convert.ToDouble(numberOne) / Convert.ToDouble(numberTwo));
+            }
+            catch (DivideByZeroException exp) 
+            {
+                Console.WriteLine("Exception caught!!! Division by zero not allowed");
+                Console.WriteLine("Message: " + exp.Message);
+            }
+
+            return divisionResult;
+        }
+
+        public static bool ArrayContainsOnlyInts(String[] splittedArray)
+        {
+            bool flagIntsOnly = true;
+            foreach (String stringItem in splittedArray)
+            {
+                if (! int.TryParse(stringItem, out _))
+                {
+                    flagIntsOnly = false;
+                    break;
+                }
+            }
+
+            return flagIntsOnly;
         }
     }
 }

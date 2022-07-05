@@ -9,7 +9,7 @@
 
         public static int GetLuckyNumber() 
         {
-            return 999;
+            return 99999;
         }
 
         public static int forceIntegerInput(string title)
@@ -40,6 +40,21 @@
             }
 
             return validatedNumber;
+        }
+
+        public static bool ArrayContainsOnlyInts(String[] splittedArray)
+        {
+            bool flagIntsOnly = true;
+            foreach (String str in splittedArray)
+            {
+                if (int.TryParse(str, out _))
+                {
+                    flagIntsOnly = false;
+                    break;
+                }
+            }
+
+            return flagIntsOnly;
         }
     }
 }
