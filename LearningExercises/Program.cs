@@ -81,7 +81,18 @@ while (keepAlive)
             case 22:
                 mySolutions.Exercise22();
                 break;
-
+            case 23:
+                mySolutions.Exercise23();
+                break;
+            case 24:
+                mySolutions.Exercise24();
+                break;
+            case 25:
+                mySolutions.Exercise25();
+                break;
+            case 26:
+                mySolutions.Exercise26();
+                break;
             case 99:
                 
                 break;

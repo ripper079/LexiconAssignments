@@ -9,10 +9,11 @@
 
         public static int GetLuckyNumber() 
         {
-            return 99999;
+            return 999666;
         }
 
-        public static int forceIntegerInput(string title)
+        //Before start with small letter
+        public static int ForceIntegerInput(string title)
         {
             Console.WriteLine(title);
             var numbAsString = Console.ReadLine();
@@ -27,7 +28,8 @@
             return validatedNumber;
         }
 
-        public static double forceDoubleInput(string title)
+        //Before start with small letter
+        public static double ForceDoubleInput(string title)
         {
             Console.WriteLine(title);
             var numbAsString = Console.ReadLine();
@@ -43,11 +45,11 @@
         }
 
         public static bool ArrayContainsOnlyInts(String[] splittedArray)
-        {
+        {            
             bool flagIntsOnly = true;
             foreach (String str in splittedArray)
             {
-                if (int.TryParse(str, out _))
+                if (! int.TryParse(str, out _))
                 {
                     flagIntsOnly = false;
                     break;

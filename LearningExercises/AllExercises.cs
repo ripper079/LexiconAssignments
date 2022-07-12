@@ -881,7 +881,6 @@ namespace LearningExercises
             }
         }
 
-
         private string[] GetWordsWithoutMatchPattern(string[] listOfStringsWithUnwantedChars) 
         {
             //Trim off characters that match
@@ -916,6 +915,291 @@ namespace LearningExercises
             //Trims last word only
             //string formatedString = text.Trim(charsToTrim);
             //Console.WriteLine(formatedString);
+        }
+
+        public void Exercise23() 
+        {
+            Console.WriteLine("Exercise 23");
+
+            Random rand = new Random();
+            const int upperLimitNumber = 40;
+            const int uniqueCount = 7;
+
+            
+            List<int> validNumbers = new List<int>(upperLimitNumber);
+            for (int i = 0; i < validNumbers.Capacity; i++) 
+            {
+                validNumbers.Add(i + 1);
+            }
+
+            List<int> uniqueNumbers = new List<int>(uniqueCount);
+            for (int i = 0; i < uniqueNumbers.Capacity; i++) 
+            {
+                //Randomize indexNumber for validNumber
+                int randomizedIndex = rand.Next(0, validNumbers.Count);
+                //Add the number
+                uniqueNumbers.Add(validNumbers[randomizedIndex]);
+                //Remove element at randomized index
+                validNumbers.RemoveAt(randomizedIndex);
+            }
+          
+            foreach (int itemInt in uniqueNumbers) 
+            {
+                Console.Write($"{itemInt} ");
+            }
+            Console.WriteLine();   
+            
+
+        }
+
+        public void Exercise24() 
+        {
+            
+            int[] deckOfCardsLeft = { 
+                                1, 1, 1, 1,
+                                2, 2, 2, 2,
+                                3, 3, 3, 3,
+                                4, 4, 4, 4,
+                                5, 5, 5, 5,
+                                6, 6, 6, 6,
+                                7, 7, 7, 7,
+                                8, 8, 8, 8,
+                                9, 9, 9, 9,
+                                10, 10, 10, 10,
+                                11, 11, 11, 11,
+                                12, 12, 12, 12,
+                                13, 13, 13, 13
+                                };
+
+            int[] deckOfCardsRight = new int[0];                  
+
+            bool keepRunning = true;
+            int choice;
+
+            while (keepRunning) 
+            {
+                Console.Clear();
+                Console.WriteLine("The shuffle game");
+                Console.WriteLine();
+                PrintDeck(deckOfCardsLeft, "Left Deck of Cards");
+                PrintDeck(deckOfCardsRight, "Right Deck of Card");
+                Console.WriteLine();
+                PrintMenuOption();
+                choice = forceIntegerInput("Input an integer number");
+
+                switch (choice) 
+                {
+                    case 1:
+                        ShuffleCards(ref deckOfCardsLeft);
+                        break;
+                    case 2:
+                        ShuffleCards(ref deckOfCardsRight);
+                        break;
+                    case 3:
+                        if (deckOfCardsLeft.Length == 0)
+                        {
+                            Console.WriteLine("The left deck is empty");
+                            Console.Write("Press any key");
+                            Console.ReadKey();
+                        }
+                        else 
+                        {
+                            int cardNumberDrawnLeft = DrawCard(ref deckOfCardsLeft);
+                            Console.WriteLine($"Drawn card [from deck LEFT] is: {cardNumberDrawnLeft}");
+                            Console.Write("Press any key");
+                            Console.ReadKey();
+                            int indexOfRightDeck = deckOfCardsRight.Length;
+                            Array.Resize(ref deckOfCardsRight, deckOfCardsRight.Length + 1);
+                            deckOfCardsRight[indexOfRightDeck] = cardNumberDrawnLeft;
+                            Array.Sort(deckOfCardsRight);
+                        }                        
+                        break;
+                    case 4:
+                        if (deckOfCardsRight.Length == 0)
+                        {
+                            Console.WriteLine("The right deck is empty");
+                            Console.Write("Press any key");
+                            Console.ReadKey();
+                        }
+                        else 
+                        {
+                            int cardNumberDrawnRight = DrawCard(ref deckOfCardsRight);
+                            Console.WriteLine($"Drawn card [from deck RIGHT] is: {cardNumberDrawnRight}");
+                            Console.Write("Press any key");
+                            Console.ReadKey();
+                            int indexOfLeftDeck = deckOfCardsLeft.Length;
+                            Array.Resize(ref deckOfCardsLeft, deckOfCardsLeft.Length + 1);
+                            deckOfCardsLeft[indexOfLeftDeck] = cardNumberDrawnRight;
+                            Array.Sort(deckOfCardsRight);
+                        }                        
+                        break;
+                    case 5:
+                        keepRunning = false;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid input. Press enter to contine");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
+              
+        static void PrintMenuOption() 
+        {
+                      
+            Console.WriteLine("1. Shuffle Left Deck");
+            Console.WriteLine("1. Shuffle Right Deck");
+            Console.WriteLine("3. Draw Card (From left deck to right deck)");
+            Console.WriteLine("4. Draw Card (From right deck to to deck)");
+            Console.WriteLine("5. End shuffle game");
+            Console.WriteLine();
+            Console.WriteLine("Make a selection [Confirm with enter]");
+        }      
+
+        static void PrintDeck(int[] deck, string title) 
+        {                        
+                Console.WriteLine($"{title} {deck.Length} card(s)");
+                Console.Write("[ ");
+                foreach (int item in deck)
+                {
+                    if (item != 0) 
+                    {
+                        Console.Write($" {item}");
+                    }                    
+                }
+                Console.WriteLine($" ]");            
+            
+        }
+
+        static void ShuffleCards(ref int[] deck) 
+        {
+            Random random = new Random();
+            int randomIndex;
+
+            for (int i = 0; i < deck.Length; i++) 
+            {
+                randomIndex = i + random.Next(deck.Length - i);
+
+                int tempValue = deck[randomIndex];
+                deck[randomIndex] = deck[i];
+                deck[i] = tempValue;
+            }
+        }
+
+        //Make sure to store the popped value
+        static int DrawCard(ref int[] deck) 
+        {
+            Random random = new Random();
+
+            int randomIndexCardToDraw = random.Next(deck.Length);
+            int lastIndexOfDeck = deck.Length - 1;
+
+            int cardNumber = deck[randomIndexCardToDraw];
+
+            //Swap value
+            if (randomIndexCardToDraw != lastIndexOfDeck) 
+            {
+                int tempValue = deck[randomIndexCardToDraw];
+                deck[randomIndexCardToDraw] = deck[lastIndexOfDeck];
+                deck[lastIndexOfDeck] = tempValue;
+
+
+            }
+            //Index are equal - Doesnt matter which one is choosen
+            else 
+            {
+            
+            }
+            // 'Removes' or 'chops off' the last element in the deck
+            Array.Resize(ref deck, deck.Length - 1);
+            //User friendly format
+            Array.Sort(deck);
+
+            // 'Pop' it of array
+            return cardNumber;
+
+        }
+
+        public void Exercise25() 
+        {
+            Console.WriteLine("Exercise 25");
+            int userValueOne = UserMustEnterAValidInteger();
+            int userValueTwo = UserMustEnterAValidInteger();
+
+            
+            try
+            {
+                Console.WriteLine($"Division {userValueOne}/{userValueTwo}={userValueOne/userValueTwo}");    
+            }
+            catch (DivideByZeroException exp) 
+            {
+                Console.WriteLine("You cant divide with zero!!!");
+            }
+            
+        }
+
+        public static int UserMustEnterAValidInteger() 
+        {
+            bool integerFlag = false;
+            //Console.WriteLine("Please enter a valid integer value");
+
+            string userInput;// = Console.ReadLine();
+            int intValue = 0;
+
+            while (!integerFlag) 
+            {
+                Console.WriteLine("Please enter a valid integer value");
+                userInput = Console.ReadLine();
+
+                try
+                {
+                    intValue = int.Parse(userInput);
+                    integerFlag = true;
+                }
+                catch (ArgumentNullException exp)
+                {
+                    Console.WriteLine($"Argument exception caught!! {exp.Message}");
+                }
+                catch (FormatException exp)
+                {
+                    Console.WriteLine($"Format exception caught!! {exp.Message}");
+                }
+                catch (OverflowException exp)
+                {
+                    Console.WriteLine($"Overflow exception caught!! {exp.Message}");
+                }
+            }
+
+            return intValue;
+        }
+
+        public void Exercise26()
+        {
+            Console.WriteLine("Exercise 26");
+
+            String myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            String myPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            String myProgramFiles86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+            String mycookies = Environment.GetFolderPath(Environment.SpecialFolder.Cookies);
+            String myCurrentDirectory = Environment.CurrentDirectory;
+
+            String myDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string filePath = myDesktop + "lexicon_in_tha_house.txt";
+            var fileNamePath = @filePath;
+
+            Console.WriteLine(myDocuments);
+            Console.WriteLine(myPictures);
+            Console.WriteLine(myProgramFiles86);
+            Console.WriteLine(mycookies);
+            Console.WriteLine(myCurrentDirectory);
+            Console.WriteLine(myDesktop);
+
+            byte[] dataAppendToFile;
+            using (FileStream fs = File.Create(fileNamePath)) 
+            {
+                dataAppendToFile = new System.Text.UTF8Encoding(true).GetBytes(myDesktop);
+                fs.Write(dataAppendToFile, 0, dataAppendToFile.Length);
+            }
         }
     }
 }
