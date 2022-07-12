@@ -18,17 +18,10 @@ namespace Vending_Machine
         public readonly int Price;
         public readonly string ProductName;
 
-
-
-        public override string ToString()
-        {           
-            return $"ProductName: {ProductName}\tPrice:{Price} kr";
-        }
-
-        //  ^
-        //  |
         public void Examine() 
         {
+            Console.WriteLine("Product info specification");
+            Console.WriteLine("----------------------------------------------------");
             string formattedName = "Product name: " + ProductName.PadRight(25);
             string formattedPrice = "Price: " + Price.ToString() + " kr".PadRight(15);
             Console.WriteLine(formattedName + formattedPrice);
@@ -39,6 +32,11 @@ namespace Vending_Machine
             Console.Write("Instruction usage - ");
         }
 
+        //Implement for child classs - Be sure to print (abstract) base class info to        
+        public override string ToString()
+        {           
+            return $"[Product] - ProductName: {ProductName}\tPrice:{Price} kr";
+        }         
     }
 
     

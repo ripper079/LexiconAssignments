@@ -4,10 +4,9 @@ using Vending_Machine;
 
 
 VendingMachine myVendingMachine = new VendingMachine();
-//Simulate purchase
-//myVendingMachine.ShowCart();
 
-myVendingMachine.InsertMoney(100);
+// Free money to start out with
+myVendingMachine.InsertMoney(10000);
 
 
 //Control meny loop
@@ -38,12 +37,13 @@ do
             DisplayBuyAProduct(myVendingMachine);
             break;
         case 5:
-            
+            DisplayUseAProduct(myVendingMachine);
             break;
         case 6:
-            DisplayShowShoppingCart(myVendingMachine);
+            DisplayShoppingCart(myVendingMachine);
             break;
         case 7:
+            DisplayChange(myVendingMachine);
             Console.WriteLine("Quit program");
             keepRunning = false;
             break;
@@ -58,17 +58,37 @@ do
 while (keepRunning);
 
 
+
+
+
 //Main Meny System
 static void DisplayMenuChoices(VendingMachine vendingMachine)
 {
     //Display meny
     Console.Clear();
-    Console.Write($"Vending Machine - Purchase everything you need - You have ");    
+    Console.Write($"Vending Machine - You have inserted ");
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.Write($"{vendingMachine.MoneyPool} kr ");
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.Write("and you have purchased for ");
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.Write($"{vendingMachine.CalculatePayment()} ");
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.Write("kr. Balance is ");
+    int balance = vendingMachine.MoneyPool - vendingMachine.CalculatePayment();
+
+    Console.ForegroundColor = (balance < 0) ? ConsoleColor.Red : ConsoleColor.Green;
+    Console.Write($"{balance}");
+    Console.WriteLine(" kr");
+    Console.ForegroundColor = ConsoleColor.White;
+
+    /*Console.Write($"Vending Machine - Purchase everything you need - You have ");    
     Console.ForegroundColor = ConsoleColor.Green;
     Console.Write($"{vendingMachine.MoneyPool-vendingMachine.CalculatePayment()}");
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine(" kr left");
-    
+    */
+
     Console.WriteLine("Enter a choice");
     Console.WriteLine("1. Insert money");
     Console.WriteLine("2. See all products");
@@ -76,7 +96,7 @@ static void DisplayMenuChoices(VendingMachine vendingMachine)
     Console.WriteLine("4. Buy a product");
     Console.WriteLine("5. Use a product");
     Console.WriteLine("6. Show shopping cart");
-    Console.WriteLine("7. Quit");
+    Console.WriteLine("7. Quit [Done shopping]");
 }
 
 
@@ -118,7 +138,8 @@ static void DisplayExamineProduct()
     Console.WriteLine("5. Game Console");
     Console.WriteLine();
 
-    validatedChoice = ForceIntegerInput("Enter a menu option [integer option]");
+    validatedChoice = ForceIntegerInput("Enter a product option [integer value 1-5]");
+    Console.WriteLine();
 
     //All valid options should call base class
     switch (validatedChoice) 
@@ -139,17 +160,19 @@ static void DisplayExamineProduct()
             new ProductGameConsole().Examine();
             break;
         default:
-            Console.WriteLine("Invalid menu option!!!!");
-            Console.WriteLine("[Press any key for returning to MAIN meny]");
-            Console.ReadKey();
+            Console.WriteLine("Invalid product menu option!!!!");
+            //Console.WriteLine("[Press any key for returning to MAIN meny]");
+            //Console.ReadKey();
             break;
     }
-
+    Console.WriteLine();
 }
 
 static void DisplayBuyAProduct(VendingMachine vendingMachine) 
 {
+    Console.WriteLine();
     Console.WriteLine("Which product do you wish to buy [1-5]");
+    Console.WriteLine("--------------------------------------");
     vendingMachine.ShowAll();
 
     int optionValue = ForceIntegerInput("Enter a valid integer");
@@ -170,22 +193,57 @@ static void DisplayBuyAProduct(VendingMachine vendingMachine)
     }
     else 
     {
-        Console.WriteLine($"You bought a {productUserChoose.ProductName} for {productUserChoose.Price} kr");
-        Console.WriteLine("The item was added to your shopping cart");
-        vendingMachine.Purchase(productUserChoose);
+        if (vendingMachine.EnoughMoneyToBuyOneMoreProduct(productUserChoose)) 
+        {
+            Console.WriteLine($"You bought a {productUserChoose.ProductName} for {productUserChoose.Price} kr");
+            Console.WriteLine("The item was added to your shopping cart");
+            Console.WriteLine();
+            vendingMachine.Purchase(productUserChoose);     
+        }
+        else 
+        {
+            Console.WriteLine("You dont have enough money. Please insert some more money");
+        }
+
         
     }
-
-
-
 }
 
-static void DisplayUseAProduct()
+static void DisplayUseAProduct(VendingMachine vendingMachine)
+{    
+    if (vendingMachine.IsShoppingCartEmpty())
+    {
+        Console.WriteLine("Shopping cart is empty");
+    }
+    else
+    {
+        Console.WriteLine();
+        Console.WriteLine("Which product do you wish to use/consume?");
+        vendingMachine.ShowAndCosumeProduct();
+    }
+}
+
+static void DisplayShoppingCart(VendingMachine vendingMachine) 
 {
-    Console.WriteLine("Which product do you wish to use?");
+    if (vendingMachine.IsShoppingCartEmpty()) 
+    {
+        Console.WriteLine("Shopping cart is empty");
+    }
+    else 
+    {
+        Console.WriteLine();
+        vendingMachine.ShowCart();
+    }
+    
 }
 
-static void DisplayShowShoppingCart(VendingMachine vendingMachine) 
+static void DisplayChange(VendingMachine vendingMachine) 
 {
-    vendingMachine.ShowCart();
+    Console.WriteLine();
+    vendingMachine.ItemPurchased();
+    Console.WriteLine($"Cash back: {vendingMachine.CalculateReturnChange()} kr");
+    Console.WriteLine($"{vendingMachine.EndTransaction()}");
 }
+
+
+

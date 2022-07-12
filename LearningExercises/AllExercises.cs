@@ -107,8 +107,8 @@ namespace LearningExercises
         public void Exercise06() 
         {
             Console.WriteLine("Exercise 6");
-            int numberOne = forceIntegerInput("Enter an int number [first]");
-            int numberTwo = forceIntegerInput("Enter a number [second]");
+            int numberOne = ForceIntegerInput("Enter an int number [first]");
+            int numberTwo = ForceIntegerInput("Enter a number [second]");
             Console.WriteLine();
 
             int smallestNumber =  ((numberOne < numberTwo) ? numberOne : numberTwo);
@@ -148,7 +148,7 @@ namespace LearningExercises
         {
             Console.WriteLine("Exercise 7");
 
-            double radius = forceDoubleInput("Input radius of a circle [as an double]");
+            double radius = ForceDoubleInput("Input radius of a circle [as an double]");
             
             double areaCircle = (2*Math.PI * Math.Pow(radius, 2));
             double volumeCircle = (4 * Math.PI * Math.Pow(radius, 3)) / 3;
@@ -180,7 +180,7 @@ namespace LearningExercises
             Console.WriteLine("Enter you name:");
             string name = Console.ReadLine();
 
-            int birthYearOfCustomer = forceIntegerInput("Enter your birthday year");            
+            int birthYearOfCustomer = ForceIntegerInput("Enter your birthday year");            
             //Extract current year
             int currentYear = DateTime.Now.Year;
 
@@ -289,7 +289,7 @@ namespace LearningExercises
             Console.WriteLine("1. [Division Calc]");
             Console.WriteLine("2. [Invoke exercise 4]");
             Console.WriteLine("3. [Toogle color]");
-            int optionChoice = forceIntegerInput("Choose an option");
+            int optionChoice = ForceIntegerInput("Choose an option");
             switch (optionChoice) 
             {
                 case 1 :
@@ -315,8 +315,8 @@ namespace LearningExercises
 
         private void ExecuteSub10_1() 
         {
-            int a = forceIntegerInput("Enter the first number");
-            int b = forceIntegerInput("Enter the second number");
+            int a = ForceIntegerInput("Enter the first number");
+            int b = ForceIntegerInput("Enter the second number");
 
             if (b == 0)
             {
@@ -332,7 +332,7 @@ namespace LearningExercises
 
         public void Exercise11() 
         {
-            int number = forceIntegerInput("Enter an interger[greater than 0]");
+            int number = ForceIntegerInput("Enter an interger[greater than 0]");
             Console.WriteLine();
             if (number <= 0) 
             {
@@ -439,7 +439,7 @@ namespace LearningExercises
         }
         private void ExecuteSub15_1() 
         {
-            int userInput = forceIntegerInput("Enter a valid integer number");
+            int userInput = ForceIntegerInput("Enter a valid integer number");
             Console.WriteLine("Displaying divisible numbers");
 
             //Skip 1 
@@ -500,7 +500,7 @@ namespace LearningExercises
         public void Exercise16()
         {
             Console.WriteLine("Exercise 16");
-            int number = forceIntegerInput("Enter a number [geater than 0] for Fibonacci series");
+            int number = ForceIntegerInput("Enter a number [geater than 0] for Fibonacci series");
 
             int val1 = 0, val2 = 1, val3;
 

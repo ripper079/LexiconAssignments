@@ -19,7 +19,7 @@ namespace Vending_Machine
         public void InsertMoney(int amountMoney);       //add money to the pool.
 
         //Code requirement 2-4
-        //public void EndTransaction()                  //returns money left in appropriate amount of change(Dictionary
+        public string EndTransaction();                  //returns money left in appropriate amount of change(Dictionary
 
     }
 }

@@ -10,14 +10,16 @@ namespace Vending_Machine
     {
         //Hard coded, to avoid inflation :D
         public ProductLotteryGame() : base(125, "Lottery Game") {}
-        
-        //Ok, you are responsible for the inflation and brand name
-        //public ProductLotteryGame(int price, string productName) : base(price, productName) {}
 
         public override void Use()
         {
             base.Use();
-            Console.WriteLine("Pick the lottery and be a $$$ Millionaire $$$");
+            Console.WriteLine("Pick the right lottery and be a $$$ Millionaire $$$");
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $"[ProductLotteryGame - No fields]";
         }
     }
 }
