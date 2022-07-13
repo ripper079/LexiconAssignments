@@ -20,7 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorEnhanced", "Calcu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorEnhanced.Tests", "CalculatorEnhanced.Tests\CalculatorEnhanced.Tests.csproj", "{86D5BA4A-1BEB-4C21-ACC4-34C1C14447BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vending Machine", "Vending Machine\Vending Machine.csproj", "{8DC582A1-018B-4277-9558-FA7E84C8480D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VendingMachine", "Vending Machine\VendingMachine.csproj", "{8DC582A1-018B-4277-9558-FA7E84C8480D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendingMachineTests", "VendingMachineTests\VendingMachineTests.csproj", "{2095B378-C3CD-4264-B6D0-EA3418191E2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +62,10 @@ Global
 		{8DC582A1-018B-4277-9558-FA7E84C8480D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DC582A1-018B-4277-9558-FA7E84C8480D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DC582A1-018B-4277-9558-FA7E84C8480D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2095B378-C3CD-4264-B6D0-EA3418191E2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2095B378-C3CD-4264-B6D0-EA3418191E2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2095B378-C3CD-4264-B6D0-EA3418191E2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2095B378-C3CD-4264-B6D0-EA3418191E2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

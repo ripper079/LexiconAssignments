@@ -19,7 +19,7 @@ namespace Vending_Machine
         }
 
         //Code requirement 2-0
-        private readonly int[] denominations = new int[] {1000,500,100,50,20,10,5,1};
+        public readonly int[] denominations = new int[] {1000,500,100,50,20,10,5,2,1};
 
         //How much money the client has put in the vending machine
         public int MoneyPool { get; private set; }
@@ -27,6 +27,11 @@ namespace Vending_Machine
         private List<Product> _shoppingCart;
         //Show meny item
         //Print correct denominations
+
+        public int CountInShoppingCart() 
+        {
+            return _shoppingCart.Count;
+        }
 
         //      All interfaces (Code requirements)
         //              |
@@ -37,30 +42,72 @@ namespace Vending_Machine
         {
             int changeBack = MoneyPool - CalculatePayment();
 
+            String cashBack = "\n";
+
             int coinsIn1000 = changeBack / (denominations[0]);        // Antal st 1000 lappar
             changeBack -= coinsIn1000 * (denominations[0]);           // Resterande växel
+            if (coinsIn1000 != 0) 
+            {
+                cashBack += $"1000".PadRight(6) + "coins : " + $"{coinsIn1000.ToString()}\n";
+            }
 
             int coinsIn500 = changeBack / (denominations[1]);          // Antal st 500 lappar
             changeBack -= coinsIn500 * (denominations[1]);             // Resterande växel
+            if (coinsIn500 != 0) 
+            {
+                cashBack += $"500".PadRight(6) + "coins : " + $"{coinsIn500.ToString()}\n";
+            }
 
             int coinsIn100 = changeBack / (denominations[2]);
             changeBack -= coinsIn100 * (denominations[2]);
+            if (coinsIn100 != 0)
+            {
+                cashBack += $"100".PadRight(6) + "coins : " + $"{coinsIn100.ToString()}\n";
+            }
 
             int coinsIn50 = changeBack / (denominations[3]);
             changeBack -= coinsIn50 * (denominations[3]);
+            if (coinsIn50 != 0) 
+            {
+                cashBack += $"50".PadRight(6) + "coins : " + $"{coinsIn50.ToString()}\n";
+            }
 
             int coinsIn20 = changeBack / (denominations[4]);
             changeBack -= coinsIn20 * (denominations[4]);
+            if (coinsIn20 != 0) 
+            {
+                cashBack += $"20".PadRight(6) + "coins : " + $"{coinsIn20.ToString()}\n";
+            }
 
             int coinsIn10 = changeBack / (denominations[5]);
             changeBack -= coinsIn10 * (denominations[5]);
+            if (coinsIn10 != 0) 
+            {
+                cashBack +=  $"10".PadRight(6) + "coins : " + $"{coinsIn10.ToString()}\n";
+            }
 
             int coinsIn5 = changeBack / (denominations[6]);
             changeBack -= coinsIn5 * (denominations[6]);
+            if (coinsIn5 != 0)
+            {
+                cashBack += $"5".PadRight(6) + "coins : " + $"{coinsIn5.ToString()}\n";
+            }
 
-            int coinsIn1 = changeBack / (denominations[7]);
-            changeBack -= coinsIn1 * (denominations[7]);
+            int coinsIn2 = changeBack / (denominations[7]);
+            changeBack -= coinsIn2 * (denominations[7]);
+            if (coinsIn2 != 0)
+            {
+                cashBack += $"5".PadRight(6) + "coins : " + $"{coinsIn2.ToString()}\n";
+            }
 
+            int coinsIn1 = changeBack / (denominations[8]);
+            changeBack -= coinsIn1 * (denominations[8]);
+            if (coinsIn1 != 0)
+            {
+                cashBack += $"1".PadRight(6) + "coins : " + $"{coinsIn1.ToString()}\n";
+            }
+
+            /*
             string cashBackInString = "\n" +
                                 "Coins distribution\n" +
                                 $"1000".PadRight(6) + "coins : " + $"{coinsIn1000.ToString()}\n" +
@@ -70,9 +117,11 @@ namespace Vending_Machine
                                 $"20".PadRight(6) + "coins : " + $"{coinsIn20.ToString()}\n" +
                                 $"10".PadRight(6) + "coins : " + $"{coinsIn10.ToString()}\n" +
                                 $"5".PadRight(6) + "coins : " + $"{coinsIn5.ToString()}\n" +
+                                $"2".PadRight(6) + "coins : " + $"{coinsIn2.ToString()}\n" +
                                 $"1".PadRight(6) + "coins : " + $"{coinsIn1.ToString()}\n";
+            */
 
-            return cashBackInString;
+            return cashBack;
         }
 
         public void Purchase(Product aProduct) 
@@ -81,10 +130,11 @@ namespace Vending_Machine
             _shoppingCart.Add(aProduct);
         }
 
-        public void ShowAndCosumeProduct() 
+        //This method may be a prospect for removal
+        public void RemoveProduct() 
         {
             Console.WriteLine();
-            Console.WriteLine("Own product(s)");
+            Console.WriteLine("Product(s) currently in shopping cart");
             Console.WriteLine();
             Console.WriteLine("Index\tProductname");
             for (int i = 0; i < _shoppingCart.Count; i++) 
@@ -93,18 +143,17 @@ namespace Vending_Machine
             }
 
             Console.WriteLine();
-            Console.WriteLine("Remove product by selecting its index");
-            int removeItemAtIndex = ForceIntegerInput("Enter a valid index");
+            Console.WriteLine("Remove product from shopping cart by selecting its index");
+            int removeItemAtIndex = ForceIntegerInput("Enter a valid number");
 
-            
+            //Overkill, this check is done before removing product
             if (_shoppingCart.Count > 0) 
             {
                 //Error check to se that index is within range
-                if (removeItemAtIndex < _shoppingCart.Count) 
+                if (removeItemAtIndex >= 0 && removeItemAtIndex <= (_shoppingCart.Count()-1)) 
                 {
-                    Console.WriteLine($"You removed the product {_shoppingCart[removeItemAtIndex].ProductName}");
-                    Console.WriteLine("Press a key to enter");
-                    Console.ReadKey();
+                    Product productToRemove = _shoppingCart[removeItemAtIndex];
+                    Console.WriteLine($"You removed the product {_shoppingCart[removeItemAtIndex].ProductName} from shopping cart");                    
                     _shoppingCart.RemoveAt(removeItemAtIndex);
                 }
                 //Invalid index
@@ -117,6 +166,20 @@ namespace Vending_Machine
             {
                 Console.WriteLine("Cannot consume anything, the cart is empty");
             }
+        }
+
+        public void ShowUsageOfAllProductsInCart() 
+        {
+            Console.WriteLine();
+            Console.WriteLine("Instruction usage for all items in shoping cart");
+            Console.WriteLine("-------------------------------------------------");
+
+            foreach(Product product in _shoppingCart) 
+            {
+                Console.Write($"Product \'{product.ProductName}\' : ");
+                product.Use();
+            }
+            Console.WriteLine();
         }
 
         public void ShowCart()

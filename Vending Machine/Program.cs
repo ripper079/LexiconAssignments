@@ -6,7 +6,7 @@ using Vending_Machine;
 VendingMachine myVendingMachine = new VendingMachine();
 
 // Free money to start out with
-myVendingMachine.InsertMoney(10000);
+//myVendingMachine.InsertMoney(10000);
 
 
 //Control meny loop
@@ -19,7 +19,7 @@ do
     DisplayMenuChoices(myVendingMachine);
 
     //Force
-    validatedChoice = ForceIntegerInput("Enter a menu option");
+    validatedChoice = ForceIntegerInput("Enter a menu option [1-8]");
 
     //Perform user desired operation
     switch (validatedChoice)
@@ -37,12 +37,15 @@ do
             DisplayBuyAProduct(myVendingMachine);
             break;
         case 5:
-            DisplayUseAProduct(myVendingMachine);
+            DisplayUsageInfoProducts(myVendingMachine);
             break;
         case 6:
             DisplayShoppingCart(myVendingMachine);
             break;
         case 7:
+            DisplayRemoveItemFromShoppingCart(myVendingMachine);
+            break;
+        case 8:
             DisplayChange(myVendingMachine);
             Console.WriteLine("Quit program");
             keepRunning = false;
@@ -70,7 +73,7 @@ static void DisplayMenuChoices(VendingMachine vendingMachine)
     Console.ForegroundColor = ConsoleColor.Green;
     Console.Write($"{vendingMachine.MoneyPool} kr ");
     Console.ForegroundColor = ConsoleColor.White;
-    Console.Write("and you have purchased for ");
+    Console.Write($"and you have purchased {vendingMachine.CountInShoppingCart()} item(s) for ");
     Console.ForegroundColor = ConsoleColor.Red;
     Console.Write($"{vendingMachine.CalculatePayment()} ");
     Console.ForegroundColor = ConsoleColor.White;
@@ -82,21 +85,17 @@ static void DisplayMenuChoices(VendingMachine vendingMachine)
     Console.WriteLine(" kr");
     Console.ForegroundColor = ConsoleColor.White;
 
-    /*Console.Write($"Vending Machine - Purchase everything you need - You have ");    
-    Console.ForegroundColor = ConsoleColor.Green;
-    Console.Write($"{vendingMachine.MoneyPool-vendingMachine.CalculatePayment()}");
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.WriteLine(" kr left");
-    */
-
-    Console.WriteLine("Enter a choice");
+    Console.WriteLine();
+    Console.WriteLine("Meny Selection");    
     Console.WriteLine("1. Insert money");
     Console.WriteLine("2. See all products");
     Console.WriteLine("3. Examine product");
     Console.WriteLine("4. Buy a product");
-    Console.WriteLine("5. Use a product");
+    Console.WriteLine("5. Use manual of product(s) in shopping cart");
     Console.WriteLine("6. Show shopping cart");
-    Console.WriteLine("7. Quit [Done shopping]");
+    Console.WriteLine("7. Delete item from shopping cart");
+    Console.WriteLine("8. Quit [Done shopping]");
+    Console.WriteLine();
 }
 
 
@@ -105,10 +104,37 @@ static void DisplayInsertMoneyIntoVendingMachine(VendingMachine vendingMachine)
 {
     Console.WriteLine();
     Console.WriteLine();
+    Console.Write("Valid fixed denomintions [ ");
+    foreach (int validDenomination in vendingMachine.denominations)
+    {
+        Console.Write($"{validDenomination} ");
+    }
+    Console.WriteLine("]");
+
     int insertedMoney = ForceIntegerInput("Insert money into machine");
-    Console.WriteLine($"You inserted {insertedMoney} kr");
-    Console.WriteLine();
-    vendingMachine.InsertMoney(insertedMoney);
+
+    //Check for valid denomination
+    bool validDenominationFlag = false;
+    
+    foreach (int validDenomination in vendingMachine.denominations)
+    {
+        if (validDenomination == insertedMoney)
+        {
+            validDenominationFlag = true;
+            break;
+        }
+    }
+    
+    if (validDenominationFlag) 
+    {
+        Console.WriteLine($"You inserted {insertedMoney} kr");
+        Console.WriteLine();
+        vendingMachine.InsertMoney(insertedMoney);    
+    }
+    else
+    {
+        Console.WriteLine("That is INVALID fixed Denomination");
+    }
     //Console.WriteLine("[Press any key for returning to meny]");
     //Console.ReadKey();
 }
@@ -141,8 +167,9 @@ static void DisplayExamineProduct()
     validatedChoice = ForceIntegerInput("Enter a product option [integer value 1-5]");
     Console.WriteLine();
 
+    //Refactor with a switch expression better
     //All valid options should call base class
-    switch (validatedChoice) 
+    /*switch (validatedChoice) 
     {
         case 1:
             new ProductPotatoChips().Examine();
@@ -160,11 +187,32 @@ static void DisplayExamineProduct()
             new ProductGameConsole().Examine();
             break;
         default:
-            Console.WriteLine("Invalid product menu option!!!!");
-            //Console.WriteLine("[Press any key for returning to MAIN meny]");
-            //Console.ReadKey();
+            Console.WriteLine("Invalid product menu option!!!!");            
             break;
     }
+    */
+
+    //validatedChoice is only an integer for sure, we don't know the range 
+    Product? userProductExamine = validatedChoice switch
+    {
+        1 => new ProductPotatoChips(),
+        2 => new ProductIceCream(),
+        3 => new ProductLotteryGame(),
+        4 => new ProductSodaBeverage(),
+        5 => new ProductGameConsole(),
+        _ => null
+    };
+
+    if (userProductExamine == null) 
+    {
+        Console.WriteLine("Invalid product menu option!!!!");
+    }
+    else 
+    {
+        //Polymorfic behaviour
+        userProductExamine.Examine();
+    }
+
     Console.WriteLine();
 }
 
@@ -209,7 +257,7 @@ static void DisplayBuyAProduct(VendingMachine vendingMachine)
     }
 }
 
-static void DisplayUseAProduct(VendingMachine vendingMachine)
+static void DisplayUsageInfoProducts(VendingMachine vendingMachine)
 {    
     if (vendingMachine.IsShoppingCartEmpty())
     {
@@ -218,8 +266,9 @@ static void DisplayUseAProduct(VendingMachine vendingMachine)
     else
     {
         Console.WriteLine();
-        Console.WriteLine("Which product do you wish to use/consume?");
-        vendingMachine.ShowAndCosumeProduct();
+        //Console.WriteLine("Which product do you wish to use/consume?");
+        //vendingMachine.ShowAndCosumeProduct();
+        vendingMachine.ShowUsageOfAllProductsInCart();
     }
 }
 
@@ -234,6 +283,21 @@ static void DisplayShoppingCart(VendingMachine vendingMachine)
         Console.WriteLine();
         vendingMachine.ShowCart();
     }
+    
+}
+
+static void DisplayRemoveItemFromShoppingCart(VendingMachine vendingMachine) 
+{
+    if (vendingMachine.IsShoppingCartEmpty())
+    {
+        Console.WriteLine("Shopping cart is empty");
+    }
+    else
+    {
+        Console.WriteLine();
+        vendingMachine.RemoveProduct();
+    }
+
     
 }
 
