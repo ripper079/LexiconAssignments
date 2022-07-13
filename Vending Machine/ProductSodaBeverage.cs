@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vending_Machine
+﻿namespace Vending_Machine
 {
     public class ProductSodaBeverage : Product
     {
-        //Hard coded, to avoid inflation :D
         public ProductSodaBeverage() : base(10, "Soda Beverage") { }
 
         public override void Use()

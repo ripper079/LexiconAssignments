@@ -13,7 +13,7 @@ do
     DisplayMenuChoices(myVendingMachine);
 
     //Force
-    validatedChoice = ForceIntegerInput("Enter a menu option [1-8]");
+    validatedChoice = ForceIntegerInput("Enter a menu option [1-7]");
 
     //Perform user desired operation
     switch (validatedChoice)
@@ -35,11 +35,8 @@ do
             break;
         case 6:
             DisplayShoppingCart(myVendingMachine);
-            break;
+            break;        
         case 7:
-            //DisplayRemoveItemFromShoppingCart(myVendingMachine);
-            break;
-        case 8:
             DisplayChange(myVendingMachine);
             Console.WriteLine("Quit program");
             keepRunning = false;
@@ -53,9 +50,6 @@ do
 }
 
 while (keepRunning);
-
-
-
 
 
 //Main Meny System
@@ -82,19 +76,18 @@ static void DisplayMenuChoices(VendingMachine vendingMachine)
     Console.WriteLine();
     Console.WriteLine("Meny Selection");    
     Console.WriteLine("1. Insert money");
-    Console.WriteLine("2. See all products");
+    Console.WriteLine("2. See all products currently availible");
     Console.WriteLine("3. Examine products this vending machine sells");
     Console.WriteLine("4. Buy a product");
     Console.WriteLine("5. Use manual of product(s) in shopping cart");
     Console.WriteLine("6. Show shopping cart");
     //Console.WriteLine("7. Remove item from shopping cart (put back into vending machine)");
-    Console.WriteLine("8. Quit [Done shopping]");
-    //Console.WriteLine("9. Administration mode");
+    Console.WriteLine("7. Quit [Done shopping]");    
     Console.WriteLine();
 }
 
 
-//Sub meny systems
+//Various Displayfunctions
 static void DisplayInsertMoneyIntoVendingMachine(VendingMachine vendingMachine) 
 {
     Console.WriteLine();
@@ -130,8 +123,6 @@ static void DisplayInsertMoneyIntoVendingMachine(VendingMachine vendingMachine)
     {
         Console.WriteLine("That is INVALID fixed Denomination");
     }
-    //Console.WriteLine("[Press any key for returning to meny]");
-    //Console.ReadKey();
 }
 
 static void DisplayAllProducts(VendingMachine vendingMachine) 
@@ -140,7 +131,6 @@ static void DisplayAllProducts(VendingMachine vendingMachine)
     Console.WriteLine();
     Console.WriteLine("Displaying all products");
     Console.WriteLine("-------------------------------------");
-    //vendingMachine.ShowAll();
     vendingMachine.ShowAllBuyableItems();
 }
 
@@ -151,8 +141,8 @@ static void DisplayExamineProduct()
     
     int validatedChoice = 0;
 
-    Console.WriteLine("Which [Demo]product would you want to examine");
-    Console.WriteLine("-------------------------------------");
+    Console.WriteLine("Which product would you want to examine that this offers to sell");
+    Console.WriteLine("----------------------------------------------------------------");
     Console.WriteLine("1. Potato Chips");
     Console.WriteLine("2. Ice Cream");
     Console.WriteLine("3. Lottery Game");
@@ -180,7 +170,6 @@ static void DisplayExamineProduct()
     }
     else 
     {
-        //Polymorfic behaviour
         userProductExamine.Examine();
     }
 
@@ -199,76 +188,33 @@ static void DisplayBuyAProduct(VendingMachine vendingMachine)
     }
     else
     {
-
-        //vendingMachine.ShowAll();
         vendingMachine.ShowAllBuyableItems();
 
         int prospectId = ForceIntegerInput("Purchase a product by entering the corresponing id");
 
         //Is it a valid id
         if (vendingMachine.IsIdValidForAvailibleProducts(prospectId)) 
-        {
-       
-                Console.WriteLine("VALID ID!!!");
-
+        {            
                 Product productToBuy = vendingMachine.GetProduct(prospectId);
-
-                Console.WriteLine("You want to buy the product");
-                Console.WriteLine(productToBuy);
-
-                //Got enough money???
-                //Move from availible list to shopping cart list
-                vendingMachine.Purchase(productToBuy);
-            
-        
-        
-
+                
+                if (vendingMachine.EnoughMoneyToBuyOneMoreProduct(productToBuy)) 
+                {
+                    Console.WriteLine("You bought the product");
+                    Console.WriteLine(productToBuy);
+                   
+                    //Move from availible list to shopping cart list
+                    vendingMachine.Purchase(productToBuy);            
+                }
+                else 
+                {
+                    Console.WriteLine("Sorry you dont have enough money, insert more money!");
+                }                            
         }
         else 
         {
             Console.WriteLine("You entered an invalid id");
         }
-
-
-
-
     }
-
-
-
-
-
-
-    /*
-    Product? productUserChoose = optionValue switch
-    {
-        1 => new ProductPotatoChips(),
-        2 => new ProductIceCream(),
-        3 => new ProductLotteryGame(),
-        4 => new ProductSodaBeverage(),
-        5 => new ProductGameConsole(),
-        _ => null
-    };
-
-    if (productUserChoose == null) 
-    {
-        Console.WriteLine("Invalid input of product selection!");
-    }
-    else 
-    {
-        if (vendingMachine.EnoughMoneyToBuyOneMoreProduct(productUserChoose)) 
-        {
-            Console.WriteLine($"You bought a {productUserChoose.ProductName} for {productUserChoose.Price} kr");
-            Console.WriteLine("The item was added to your shopping cart");
-            Console.WriteLine();
-            vendingMachine.Purchase(productUserChoose);     
-        }
-        else 
-        {
-            Console.WriteLine("You dont have enough money. Please insert some more money");
-        }       
-    }
-    */
 }
 
 static void DisplayUsageInfoProducts(VendingMachine vendingMachine)
@@ -280,8 +226,6 @@ static void DisplayUsageInfoProducts(VendingMachine vendingMachine)
     else
     {
         Console.WriteLine();
-        //Console.WriteLine("Which product do you wish to use/consume?");
-        //vendingMachine.ShowAndCosumeProduct();
         vendingMachine.ShowUsageOfAllProductsInCart();
     }
 }
@@ -296,47 +240,9 @@ static void DisplayShoppingCart(VendingMachine vendingMachine)
     {
         Console.WriteLine();
         vendingMachine.ShowCart();
-    }
-    
-}
-
-/*
-static void DisplayRemoveItemFromShoppingCart(VendingMachine vendingMachine) 
-{
-    Console.WriteLine();
-    Console.WriteLine("Which product do you wish remove from shopping chart");
-    Console.WriteLine("----------------------------------------------");
-
-    if (vendingMachine.IsShoppingCartEmpty())
-    {
-        Console.WriteLine("Shopping cart is empty");
-    }
-    else
-    {
-        Console.WriteLine();
-        //vendingMachine.RemoveProduct();
-        vendingMachine.ShowCart();
-
-        int prospectId = ForceIntegerInput("Remove a product from shopping cart by entering the corresponing id");
-
-        if (vendingMachine.IsIdValidForShoppingCart(prospectId))
-        {
-
-            Console.WriteLine("VALID ID!!!");
-
-            //Get the product from shpopping cart
-
-
-
-
-        }
-        else
-        {
-            Console.WriteLine("You entered an invalid id");
-        }
     }    
 }
-*/
+
 static void DisplayChange(VendingMachine vendingMachine) 
 {
     Console.WriteLine();

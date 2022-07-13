@@ -166,7 +166,7 @@ namespace LearningExercises
             Console.WriteLine("Exercise 8");
             //decimal number = AllExercises.forceDecimalInput("Input a decimal number");
 
-            double number = forceDoubleInput("Input a decimal number");
+            double number = ForceDoubleInput("Input a decimal number");
             Console.WriteLine();
 
             Console.WriteLine($"The {number} squareRooted {(Math.Sqrt(number))}");
@@ -985,7 +985,7 @@ namespace LearningExercises
                 PrintDeck(deckOfCardsRight, "Right Deck of Card");
                 Console.WriteLine();
                 PrintMenuOption();
-                choice = forceIntegerInput("Input an integer number");
+                choice = ForceIntegerInput("Input an integer number");
 
                 switch (choice) 
                 {

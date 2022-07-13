@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vending_Machine
+﻿namespace Vending_Machine
 {
     public  class ProductIceCream : Product
-    {
-        //Hard coded, to avoid inflation :D
+    {        
         public ProductIceCream() : base(25, "Ice Cream") {}        
 
         public override void Use()

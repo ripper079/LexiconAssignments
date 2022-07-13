@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vending_Machine
+﻿namespace Vending_Machine
 {
     //Code requirement 2-0
     public interface IVending
