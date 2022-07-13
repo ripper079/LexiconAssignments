@@ -8,7 +8,6 @@ namespace Vending_Machine
 {
     public abstract class Product
     {
-
         public Product(int price, string productName)
         {
             Price = price;
@@ -32,7 +31,7 @@ namespace Vending_Machine
             Console.Write("Instruction usage - ");
         }
 
-        //Implement for child classs - Be sure to print (abstract) base class info to        
+        //Implement for child classs - Be sure to print (abstract) base class info too        
         public override string ToString()
         {           
             return $"[Product] - ProductName: {ProductName}\tPrice:{Price} kr";

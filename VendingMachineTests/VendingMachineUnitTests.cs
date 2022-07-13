@@ -4,9 +4,8 @@ namespace VendingMachineTests
 {
     public class VendingMachineUnitTests
     {
-
         [Fact]
-        public void When_Inserted_1000And500And100And50_And20_And1_Expect_Balance1671()
+        public void When_Inserted_1000krAnd500krAnd100krAnd50kr_And20kr_And1kr_Expect_Balance1671kr()
         {
             //Arrange
             VendingMachine unitTestVendingMachine = new VendingMachine();
@@ -48,7 +47,7 @@ namespace VendingMachineTests
         [InlineData(20)]
         [InlineData(8)]
         [InlineData(3)]
-        public void Test_PurchedProduct_AgaistCountInShopingCart(int itemsPurchased)
+        public void Test_PurchasedProduct_AgainstCountInShoppingCart(int itemsPurchased)
         {
             //Arrange
             VendingMachine unitTestVendingMachine = new VendingMachine();

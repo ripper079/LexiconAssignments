@@ -1,10 +1,9 @@
-﻿using System;
+﻿//using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//For enum containing blank spaces
-using System.ComponentModel.DataAnnotations;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using System.ComponentModel.DataAnnotations;
 
 using static ClassLibraryUtils.UtilsInput;
 
@@ -199,7 +198,8 @@ namespace Vending_Machine
             }
 
             Console.WriteLine();
-            Console.WriteLine($"Total amount to pay: {CalculatePayment()} kr");
+            //Console.WriteLine($"Total amount to pay: {CalculatePayment()} kr");
+            Console.Write($"Total amount to pay:".PadRight(35) + $"{CalculatePayment()} kr".PadRight(1));
             Console.WriteLine();
         }
 
@@ -292,9 +292,7 @@ namespace Vending_Machine
             }
 
             return totalPayment;
-        }
-
-        
+        }        
 
         public void ItemPurchased() 
         {

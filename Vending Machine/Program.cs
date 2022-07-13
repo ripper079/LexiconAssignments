@@ -1,17 +1,11 @@
 ﻿using static ClassLibraryUtils.UtilsInput;
-
 using Vending_Machine;
-
 
 VendingMachine myVendingMachine = new VendingMachine();
 
-// Free money to start out with
-//myVendingMachine.InsertMoney(10000);
-
-
 //Control meny loop
 bool keepRunning = true;
-int validatedChoice = 0;
+int validatedChoice;
 
 do
 {
@@ -296,9 +290,7 @@ static void DisplayRemoveItemFromShoppingCart(VendingMachine vendingMachine)
     {
         Console.WriteLine();
         vendingMachine.RemoveProduct();
-    }
-
-    
+    }    
 }
 
 static void DisplayChange(VendingMachine vendingMachine) 
