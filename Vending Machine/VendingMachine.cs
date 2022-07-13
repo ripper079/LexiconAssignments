@@ -15,21 +15,146 @@ namespace Vending_Machine
         {
             MoneyPool = 0;
             _shoppingCart = new List<Product>();
+
+            PopulateProductsForBuy();            
         }
+
+        //Admin mode insert into vending mode
+
+        private void PopulateProductsForBuy() 
+        {
+            _availibleProductsForBuying = new List<Product>();
+            int i;
+
+            for (i = 0; i < 5; i++) 
+            {
+                _availibleProductsForBuying.Add(new ProductPotatoChips());                
+            }
+
+            for (i = 0; i < 5; i++)
+            {
+                _availibleProductsForBuying.Add(new ProductIceCream());
+            }
+
+            for (i = 0; i < 5; i++)
+            {
+                _availibleProductsForBuying.Add(new ProductSodaBeverage());
+            }
+            
+            for (i = 0; i < 3; i++) 
+            {
+                _availibleProductsForBuying.Add(new ProductLotteryGame());
+            }
+
+            _availibleProductsForBuying.Add(new ProductGameConsole());
+
+        }        
 
         //Code requirement 2-0
         public readonly int[] denominations = new int[] {1000,500,100,50,20,10,5,2,1};
 
+
+        //Shopping Cart
+        private List<Product> _shoppingCart;        
+        //Availible items in vending machine
+        private List<Product> _availibleProductsForBuying;
+
+
         //How much money the client has put in the vending machine
         public int MoneyPool { get; private set; }
-        
-        private List<Product> _shoppingCart;
-        //Show meny item
-        //Print correct denominations
+
+        //Client puts money into the Vending Machine
+        public void InsertMoney(int amountMoney)
+        {
+            MoneyPool += amountMoney;
+        }
+
+        //Sum of all items in shopping cart
+        public int CalculatePayment()
+        {
+            int totalPayment = 0;
+            foreach (Product aProduct in _shoppingCart)
+            {
+                totalPayment += aProduct.Price;
+            }
+
+            return totalPayment;
+        }
+
+        public int CalculateReturnChange()
+        {
+            return MoneyPool - CalculatePayment();
+        }
+
 
         public int CountInShoppingCart() 
         {
             return _shoppingCart.Count;
+        }
+
+        public int CountBuyableProducts() 
+        {
+            return _availibleProductsForBuying.Count; 
+        }
+
+        public bool IsShoppingCartEmpty()
+        {
+            return ((_shoppingCart.Count > 0) ? false : true);
+
+        }
+
+        
+        public bool IsIdValidForAvailibleProducts(int prospectId) 
+        {
+            bool flagFoundMatch = false;
+            foreach(var aProduct in _availibleProductsForBuying) 
+            {
+                if (aProduct.Id == prospectId) 
+                {
+                    flagFoundMatch = true;
+                    break;
+                }
+            }
+            return flagFoundMatch;
+        }
+
+        public bool IsIdValidForShoppingCart(int prospectId)
+        {
+            bool flagFoundMatch = false;
+            foreach (var aProduct in _shoppingCart)
+            {
+                if (aProduct.Id == prospectId)
+                {
+                    flagFoundMatch = true;
+                    break;
+                }
+            }
+            return flagFoundMatch;
+        }
+
+        //MAKE sure that the id is Valid 
+        public Product GetProduct(int productId) 
+        {
+            Product productFound = null;
+            foreach(Product product in _availibleProductsForBuying) 
+            {
+                if (productId == product.Id) 
+                {
+                    productFound = product;
+                    break;
+                }
+            }
+
+            return productFound;
+        }
+
+        public bool IsEmptyOfProducts()
+        {
+            if (_availibleProductsForBuying.Count == 0) 
+            {
+                return true;
+            }
+            return false;
         }
 
         //      All interfaces (Code requirements)
@@ -127,8 +252,18 @@ namespace Vending_Machine
         {
             //Check if client has enough $$$ in moneypool
             _shoppingCart.Add(aProduct);
+            _availibleProductsForBuying.Remove(aProduct);
         }
 
+
+        public void MoveFromShoppingCartToVendingMachine(Product aProduct) 
+        {
+            //Make sure that buyer gets money back
+            _availibleProductsForBuying.Add(aProduct);
+            _shoppingCart.Remove(aProduct);
+        }
+
+        /*
         //This method may be a prospect for removal
         public void RemoveProduct() 
         {
@@ -166,6 +301,7 @@ namespace Vending_Machine
                 Console.WriteLine("Cannot consume anything, the cart is empty");
             }
         }
+        */
 
         public void ShowUsageOfAllProductsInCart() 
         {
@@ -188,7 +324,7 @@ namespace Vending_Machine
 
             string formattedProductName;
             string formattedPrice;
-
+            /*
             foreach (Product aProduct in _shoppingCart)
             {
                 formattedProductName = aProduct.ProductName.PadRight(25);
@@ -200,6 +336,33 @@ namespace Vending_Machine
             Console.WriteLine();
             //Console.WriteLine($"Total amount to pay: {CalculatePayment()} kr");
             Console.Write($"Total amount to pay:".PadRight(35) + $"{CalculatePayment()} kr".PadRight(1));
+            Console.WriteLine();
+            */
+
+            foreach (Product productBought in _shoppingCart) 
+            {
+                Console.WriteLine(productBought);
+            }
+
+            Console.WriteLine();
+        }
+
+        public void ShowAllBuyableItems() 
+        {
+            Console.WriteLine("Buyable product(s)");
+            Console.WriteLine("-----------------------------------------");
+
+            string formattedProductName;
+            string formattedPrice;
+
+            foreach (Product aProduct in _availibleProductsForBuying)
+            {
+                formattedProductName = aProduct.ProductName.PadRight(25);
+                formattedPrice = aProduct.Price.ToString() + " kr".PadRight(1);
+
+                //Console.WriteLine($"Product: {formattedProductName} {formattedPrice}");
+                Console.WriteLine(aProduct);
+            }
             Console.WriteLine();
         }
 
@@ -228,11 +391,7 @@ namespace Vending_Machine
 
         }
 
-        //Client puts money into the Vending Machine
-        public void InsertMoney(int amountMoney) 
-        {
-            MoneyPool += amountMoney;
-        }
+        
 
         //  End interfaces
 
@@ -282,17 +441,7 @@ namespace Vending_Machine
 
         */
 
-        //Sum of all items in shopping cart
-        public int CalculatePayment() 
-        {
-            int totalPayment = 0;
-            foreach (Product aProduct in _shoppingCart)
-            {
-                totalPayment += aProduct.Price;
-            }
-
-            return totalPayment;
-        }        
+              
 
         public void ItemPurchased() 
         {
@@ -306,16 +455,8 @@ namespace Vending_Machine
             
         }
 
-        public bool IsShoppingCartEmpty() 
-        {
-            return ((_shoppingCart.Count > 0) ? false : true);
-
-        }
-
-        public int CalculateReturnChange() 
-        {
-            return MoneyPool - CalculatePayment();
-        }
+      
+        
 
         //Checks that the buyer have enough money for the item
         public bool EnoughMoneyToBuyOneMoreProduct(Product product) 

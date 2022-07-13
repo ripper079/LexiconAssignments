@@ -37,7 +37,7 @@ do
             DisplayShoppingCart(myVendingMachine);
             break;
         case 7:
-            DisplayRemoveItemFromShoppingCart(myVendingMachine);
+            //DisplayRemoveItemFromShoppingCart(myVendingMachine);
             break;
         case 8:
             DisplayChange(myVendingMachine);
@@ -83,12 +83,13 @@ static void DisplayMenuChoices(VendingMachine vendingMachine)
     Console.WriteLine("Meny Selection");    
     Console.WriteLine("1. Insert money");
     Console.WriteLine("2. See all products");
-    Console.WriteLine("3. Examine product");
+    Console.WriteLine("3. Examine products this vending machine sells");
     Console.WriteLine("4. Buy a product");
     Console.WriteLine("5. Use manual of product(s) in shopping cart");
     Console.WriteLine("6. Show shopping cart");
-    Console.WriteLine("7. Delete item from shopping cart");
+    //Console.WriteLine("7. Remove item from shopping cart (put back into vending machine)");
     Console.WriteLine("8. Quit [Done shopping]");
+    //Console.WriteLine("9. Administration mode");
     Console.WriteLine();
 }
 
@@ -139,7 +140,8 @@ static void DisplayAllProducts(VendingMachine vendingMachine)
     Console.WriteLine();
     Console.WriteLine("Displaying all products");
     Console.WriteLine("-------------------------------------");
-    vendingMachine.ShowAll();
+    //vendingMachine.ShowAll();
+    vendingMachine.ShowAllBuyableItems();
 }
 
 static void DisplayExamineProduct() 
@@ -149,7 +151,7 @@ static void DisplayExamineProduct()
     
     int validatedChoice = 0;
 
-    Console.WriteLine("Which product would you want to examine");
+    Console.WriteLine("Which [Demo]product would you want to examine");
     Console.WriteLine("-------------------------------------");
     Console.WriteLine("1. Potato Chips");
     Console.WriteLine("2. Ice Cream");
@@ -160,31 +162,6 @@ static void DisplayExamineProduct()
 
     validatedChoice = ForceIntegerInput("Enter a product option [integer value 1-5]");
     Console.WriteLine();
-
-    //Refactor with a switch expression better
-    //All valid options should call base class
-    /*switch (validatedChoice) 
-    {
-        case 1:
-            new ProductPotatoChips().Examine();
-            break;
-        case 2:
-            new ProductIceCream().Examine();
-            break;
-        case 3:
-            new ProductLotteryGame().Examine();
-            break;
-        case 4:
-            new ProductSodaBeverage().Examine();
-            break;
-        case 5:
-            new ProductGameConsole().Examine();
-            break;
-        default:
-            Console.WriteLine("Invalid product menu option!!!!");            
-            break;
-    }
-    */
 
     //validatedChoice is only an integer for sure, we don't know the range 
     Product? userProductExamine = validatedChoice switch
@@ -213,12 +190,56 @@ static void DisplayExamineProduct()
 static void DisplayBuyAProduct(VendingMachine vendingMachine) 
 {
     Console.WriteLine();
-    Console.WriteLine("Which product do you wish to buy [1-5]");
+    Console.WriteLine("Which product do you wish to buy");
     Console.WriteLine("--------------------------------------");
-    vendingMachine.ShowAll();
 
-    int optionValue = ForceIntegerInput("Enter a valid integer");
+    if (vendingMachine.IsEmptyOfProducts()) 
+    {
+        Console.WriteLine("The vending machine is empty of products");
+    }
+    else
+    {
 
+        //vendingMachine.ShowAll();
+        vendingMachine.ShowAllBuyableItems();
+
+        int prospectId = ForceIntegerInput("Purchase a product by entering the corresponing id");
+
+        //Is it a valid id
+        if (vendingMachine.IsIdValidForAvailibleProducts(prospectId)) 
+        {
+       
+                Console.WriteLine("VALID ID!!!");
+
+                Product productToBuy = vendingMachine.GetProduct(prospectId);
+
+                Console.WriteLine("You want to buy the product");
+                Console.WriteLine(productToBuy);
+
+                //Got enough money???
+                //Move from availible list to shopping cart list
+                vendingMachine.Purchase(productToBuy);
+            
+        
+        
+
+        }
+        else 
+        {
+            Console.WriteLine("You entered an invalid id");
+        }
+
+
+
+
+    }
+
+
+
+
+
+
+    /*
     Product? productUserChoose = optionValue switch
     {
         1 => new ProductPotatoChips(),
@@ -245,10 +266,9 @@ static void DisplayBuyAProduct(VendingMachine vendingMachine)
         else 
         {
             Console.WriteLine("You dont have enough money. Please insert some more money");
-        }
-
-        
+        }       
     }
+    */
 }
 
 static void DisplayUsageInfoProducts(VendingMachine vendingMachine)
@@ -280,8 +300,13 @@ static void DisplayShoppingCart(VendingMachine vendingMachine)
     
 }
 
+/*
 static void DisplayRemoveItemFromShoppingCart(VendingMachine vendingMachine) 
 {
+    Console.WriteLine();
+    Console.WriteLine("Which product do you wish remove from shopping chart");
+    Console.WriteLine("----------------------------------------------");
+
     if (vendingMachine.IsShoppingCartEmpty())
     {
         Console.WriteLine("Shopping cart is empty");
@@ -289,10 +314,29 @@ static void DisplayRemoveItemFromShoppingCart(VendingMachine vendingMachine)
     else
     {
         Console.WriteLine();
-        vendingMachine.RemoveProduct();
+        //vendingMachine.RemoveProduct();
+        vendingMachine.ShowCart();
+
+        int prospectId = ForceIntegerInput("Remove a product from shopping cart by entering the corresponing id");
+
+        if (vendingMachine.IsIdValidForShoppingCart(prospectId))
+        {
+
+            Console.WriteLine("VALID ID!!!");
+
+            //Get the product from shpopping cart
+
+
+
+
+        }
+        else
+        {
+            Console.WriteLine("You entered an invalid id");
+        }
     }    
 }
-
+*/
 static void DisplayChange(VendingMachine vendingMachine) 
 {
     Console.WriteLine();

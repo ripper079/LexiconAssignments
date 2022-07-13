@@ -4,6 +4,7 @@ namespace VendingMachineTests
 {
     public class VendingMachineUnitTests
     {
+        /*
         [Fact]
         public void When_Inserted_1000krAnd500krAnd100krAnd50kr_And20kr_And1kr_Expect_Balance1671kr()
         {
@@ -111,5 +112,6 @@ namespace VendingMachineTests
 
         }        
         
+        */
     }
 }
